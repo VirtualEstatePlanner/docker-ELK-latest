@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# a script to update the Elasticsearch/Logstash/Kibana docker images
+# Because who wants to go to the site and look at the version number, and then change that variable everywhere in the script?
+
+ELKVERSION=`curl https://www.elastic.co/downloads/elasticsearch | grep release-notes | sed 's/.*[-]//' | cut -c 1-5`
+echo "The current version of elasticsearch stack looks to be v"$ELKVERSION", so the update script will pull this version."
+
+docker pull container-registry.elastic.co/elasticsearch/elasticsearch-oss:$ELKVERSION && \
+docker pull container-registry.elastic.co/kibana/kibana:$ELKVERSION && \
+docker pull container-registry.elastic.co/logstash/logstash-oss:$ELKVERSION
